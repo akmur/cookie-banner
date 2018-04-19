@@ -262,6 +262,7 @@ THE SOFTWARE.
                 position: 'bottom',
                 message: default_text,
                 linkmsg: default_link,
+                showLinkmsg: true,
                 moreinfo: 'http://aboutcookies.org',
                 moreinfoTarget: '_blank',
                 moreinfoRel: 'noopener noreferrer',
@@ -442,7 +443,14 @@ THE SOFTWARE.
 
             var closeHtml = '<div class="cookiebanner-close" style="' + this.options.closeStyle + '">' +
                 this.options.closeText + '</div>';
-            var messageHtml = '<span>' + this.options.message + (this.options.linkmsg ? ' <a>' + this.options.linkmsg + '</a>' : '') + '</span>';
+
+            var messageHtml;
+
+            if (this.options.showLinkmsg) {
+                messageHtml = '<span>' + this.options.message + (this.options.linkmsg ? ' <a>' + this.options.linkmsg + '</a>' : '') + '</span>';
+            } else {
+                messageHtml = '<span>' + this.options.message + '</span>';
+            }
 
             if (this.options.closePrecedes) {
                 el.innerHTML = closeHtml + messageHtml;
@@ -452,18 +460,20 @@ THE SOFTWARE.
 
             this.element = el;
 
-            var el_a = el.getElementsByTagName('a')[0];
-            el_a.href = this.options.moreinfo;
-            el_a.target = this.options.moreinfoTarget;
-            if (this.options.moreinfoRel && '' !== this.options.moreinfoRel) {
-                el_a.rel = this.options.moreinfoRel;
-            }
-            el_a.style.textDecoration = this.options.moreinfoDecoration;
-            el_a.style.color = this.options.link;
-            el_a.style.fontWeight = this.options.moreinfoFontWeight;
+            if (this.options.showLinkmsg && this.options.linkmsg) {
+                var el_a = el.getElementsByTagName('a')[0];
+                el_a.href = this.options.moreinfo;
+                el_a.target = this.options.moreinfoTarget;
+                if (this.options.moreinfoRel && '' !== this.options.moreinfoRel) {
+                    el_a.rel = this.options.moreinfoRel;
+                }
+                el_a.style.textDecoration = this.options.moreinfoDecoration;
+                el_a.style.color = this.options.link;
+                el_a.style.fontWeight = this.options.moreinfoFontWeight;
 
-            if ('' !== this.options.moreinfoFontSize) {
-                el_a.style.fontSize = this.options.moreinfoFontSize;
+                if ('' !== this.options.moreinfoFontSize) {
+                    el_a.style.fontSize = this.options.moreinfoFontSize;
+                }
             }
 
             var el_x = el.getElementsByTagName('div')[0];

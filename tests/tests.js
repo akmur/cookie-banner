@@ -224,6 +224,24 @@ QUnit.test('Testing debug option', function(assert) {
     assert.strictEqual(hasCookie, false, 'the cookie is not present');
 });
 
+QUnit.test('Make sure everything works even without a link message', function(assert) {
+    var opts = {
+        linkmsg: ''
+    };
+    var banner = new Cookiebanner(opts);
+    var el = document.querySelector('.cookiebanner a');
+    assert.strictEqual(el, null, 'there is no link message');
+});
+
+QUnit.test('Do not show link message', function(assert) {
+    var opts = {
+        showLinkmsg: false
+    };
+    var banner = new Cookiebanner(opts);
+    var el = document.querySelector('.cookiebanner a');
+    assert.strictEqual(el, null, 'there is no link message');
+});
+
 QUnit.test('Not inserted automatically unless called with <script id="cookiebanner"...>', function(assert){
     stop();
     inject_script(script_src, 'different-on-purpose', {}, 'head', function(){
